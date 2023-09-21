@@ -53,8 +53,9 @@ infoTextRect.center = (WIDTH // 2, 40)
 #game cycle
 wasted = False
 isPlaying = True
+score = 0
 while isPlaying:
-    playerText = infoFont.render(f'Heals left {player.healsLeft} | HP: {player.getCurrHp()}', True, WHITE, BLACK)
+    playerText = infoFont.render(f'Heals left {player.healsLeft} | HP: {player.getCurrHp()} | Score : {score}', True, WHITE, BLACK)
     playerTextRect = playerText.get_rect()
     playerTextRect.center = (160, 60)
     # keep framerate
@@ -106,17 +107,22 @@ while isPlaying:
     if player.isEntityDown () == True:
         font = pygame.font.Font('freesansbold.ttf', 32)
         text = font.render('WASTED', True, RED, BLACK)
+        textScore = font.render(f'SCORE:{score}', True, RED, BLACK)
         textRect = text.get_rect()
+        textScoreRect = textScore.get_rect()
         textRect.center = (WIDTH // 2, HEIGHT // 2)
+        textScoreRect.center = (WIDTH // 2, HEIGHT // 2 + 40)
         mob_sprites.remove(mob)
         player_sprites.remove(player)
         screen.fill(BLACK)
         screen.blit(text, textRect)
+        screen.blit(textScore, textScoreRect)
         pygame.display.flip()
         wasted = True
 
 
     if mob.isDisappeared() == True:
+        score += 1
         all_sprites.remove(mob)
         mob_sprites.remove(mob)
         mob = MobHandler (WIDTH, HEIGHT, img_dir)

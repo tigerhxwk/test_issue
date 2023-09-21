@@ -11,9 +11,9 @@ class MobHandler(Sprite, CmnEntity):
     def __init__(self, width, height, path_to_img):
         Sprite.__init__(self)
         self.img_normal = image.load(path_to_img + "/mob.png").convert ()
-        self.img_normal = transform.scale(self.img_normal, (80, 80))
+        self.img_normal = transform.scale(self.img_normal, (60, 80))
         self.img_damaged = image.load(path_to_img + "/mob_damaged.png").convert()
-        self.img_damaged = transform.scale(self.img_damaged, (80, 80))
+        self.img_damaged = transform.scale(self.img_damaged, (60, 80))
         self.img = self.img_normal
         self.image = self.img
         self.image.set_colorkey(BLACK)
@@ -59,6 +59,6 @@ class MobHandler(Sprite, CmnEntity):
 
     def turnRed (self):
         self.img = self.img_damaged
-        self.img = transform.scale(self.img, (100, 80))
+        self.img = transform.scale(self.img, (60, 80))
         self.redCoolDown = 10
 
