@@ -3,4 +3,5 @@
 Demo game for test issue.
 Start with ./start.sh
 
-Telegram :[https://t.me/stxrmdxg]
+Telegram:[link](https://t.me/stxrmdxg)
+LinkedIn:[link](https://www.linkedin.com/in/alex-malakhov-4bb013228)
