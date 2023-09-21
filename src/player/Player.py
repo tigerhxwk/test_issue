@@ -7,21 +7,16 @@ from pygame import image
 from entities.Entity import CmnEntity
 from player.cast import Spell
 
-WIDTH = 600
-HEIGHT = 480
-FPS = 30
-
-WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
-RED = (255, 0, 0)
-GREEN = (0, 255, 0)
-BLUE = (0, 0, 255)
-YELLOW = (255, 255, 0)
 
 class PlayerHandler(Sprite, CmnEntity):
     def __init__(self, width, height, path_to_png):
         Sprite.__init__(self)
-        self.img = image.load(path_to_png).convert()
+        self.img_normal = image.load(path_to_png + "/player.png").convert ()
+        self.img_normal_left = image.load(path_to_png + "/player_left.png").convert ()
+        self.img_damaged = image.load(path_to_png + "/player_damaged.png").convert ()
+        self.img_damaged_left = image.load(path_to_png + "/player_left_damaged.png").convert ()
+        self.img =self.img_normal
         self.img = transform.scale(self.img, (100, 80))
         self.image = self.img
         self.image.set_colorkey(BLACK)
@@ -66,22 +61,33 @@ class PlayerHandler(Sprite, CmnEntity):
             self.jumpCoolDown -= 1
 
         if self.redCoolDown == 0:
-            self.image = self.img
-            self.image.set_colorkey(BLACK)
+            if self.direction == 1:
+                self.img = self.img_normal
+            else:
+                self.img = self.img_normal_left
+
         else:
             self.redCoolDown -= 1
 
+        self.image = self.img
+        self.image.set_colorkey(BLACK)
+
     def jump(self, reset = False):
         if reset == True:
-            self.speedy = 64
+            self.speedy = 85
         else:
-            self.speedy = -64
+            self.speedy = -85
             self.jumpCoolDown = 20
         self.rect.y += self.speedy
 
 
     def turnRed (self):
-        self.image.fill(RED)
+        if self.direction == 1:
+            self.img = self.img_damaged
+        else:
+            self.img = self.img_damaged_left
+
+        self.img = transform.scale(self.img, (100, 80))
         self.redCoolDown = 10
 
 

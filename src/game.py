@@ -1,4 +1,4 @@
-import os
+#!/usr/bin/python3
 
 import pygame
 from player.Player import PlayerHandler
@@ -27,8 +27,7 @@ clock = pygame.time.Clock()
 
 background = pygame.image.load(path.join(img_dir, 'background.png')).convert()
 background_rect = background.get_rect()
-player_img_path = path.join(img_dir, "player.png")
-mob_img_path = path.join(img_dir, "mob.png")
+
 fb_left = path.join(img_dir, "fireball_left.png")
 fb_right = path.join(img_dir, "fireball_right.png")
 fb_dict = dict ()
@@ -38,10 +37,10 @@ all_sprites = pygame.sprite.Group()
 player_sprites = pygame.sprite.Group()
 mob_sprites = pygame.sprite.Group()
 spells_sprites = pygame.sprite.Group()
-player = PlayerHandler (WIDTH, HEIGHT, player_img_path)
+player = PlayerHandler (WIDTH, HEIGHT, img_dir)
 #player_sprites.add(player)
 all_sprites.add(player)
-mob = MobHandler (WIDTH, HEIGHT, mob_img_path)
+mob = MobHandler (WIDTH, HEIGHT, img_dir)
 mob_sprites.add(mob)
 all_sprites.add(mob)
 dmgCoolDown = 0
@@ -73,7 +72,7 @@ while isPlaying:
                 player.heal()
 
     if mobSpawnCoolDown == 0 and len(mob_sprites.sprites()) < 2:
-        new_mob = MobHandler(WIDTH, HEIGHT, mob_img_path)
+        new_mob = MobHandler(WIDTH, HEIGHT, img_dir)
         all_sprites.add(new_mob)
         mob_sprites.add(new_mob)
         mobSpawnCoolDown = 500
@@ -83,6 +82,7 @@ while isPlaying:
     hit_mobs = pygame.sprite.groupcollide(mob_sprites, spells_sprites, False, True)
     for mob in hit_mobs:
         mob.DamageAttempt(player)
+        mob.turnRed ()
 
     all_sprites.update()
     # render
@@ -98,7 +98,7 @@ while isPlaying:
             if pygame.sprite.collide_rect(player, mob):
                 result, damage = player.DamageAttempt(mob)
                 if (result == True):
-                    # player.turnRed()
+                    player.turnRed()
                     dmgCoolDown = 15
         else:
             dmgCoolDown -= 1
@@ -119,7 +119,7 @@ while isPlaying:
     if mob.isDisappeared() == True:
         all_sprites.remove(mob)
         mob_sprites.remove(mob)
-        mob = MobHandler (WIDTH, HEIGHT, mob_img_path)
+        mob = MobHandler (WIDTH, HEIGHT, img_dir)
         all_sprites.add(mob)
         mob_sprites.add(mob)
 

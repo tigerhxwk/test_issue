@@ -1,9 +1,7 @@
 from pygame.sprite import Sprite as Sprite
-from pygame import Surface as Surface
 from pygame import transform
 from pygame import image
 
-BLUE = (0, 0, 255)
 BLACK = (0, 0, 0)
 class Spell(Sprite):
     def __init__(self, x, y, direction, width, path_to_img):
